@@ -1,6 +1,8 @@
 <?php
 
 use App\Category;
+use App\Profile;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +17,14 @@ class DatabaseSeeder extends Seeder
         factory('App\User',20)->create();
         factory('App\Company',20)->create();
         factory('App\Job',20)->create();
+
+        $users = User::all();
+
+        foreach ($users as $user){
+            Profile::create([
+                'user_id' =>$user->id
+            ]);
+        }
 
         $categories = [
             'Technology',

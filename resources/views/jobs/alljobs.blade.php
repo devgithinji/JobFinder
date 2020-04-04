@@ -3,7 +3,41 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <h1>Recent Jobs</h1>
+            <form action="{{route('alljobs')}}" method="GET">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>Keyword&nbsp;</label>
+                        <input type="text" name="title" class="form-control">&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="form-group">
+                        <label>Employment type</label>
+                        <select class="form-control" name="type" id="">
+                            <option value="">--select--</option>
+                            <option value="fulltime">full-time</option>
+                            <option value="parttime">part-ime</option>
+                            <option value="casual">casual</option>
+                            <option value="freelancer">freelance</option>
+                        </select>
+                        &nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="category_id" class="form-control" id="">
+                            @foreach(App\Category::all() as $cat)
+                                <option value="{{$cat->id}}">{{$cat->name}}</option>
+                            @endforeach
+                        </select>
+                        &nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" name="address" class="form-control">&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-outline-success">Search</button>
+                    </div>
+                </div>
+            </form>
             <table class="table">
                 <thead>
                 <th></th>
@@ -54,30 +88,7 @@
                 @endforeach
                 </tbody>
             </table>
-        </div>
-        <div>
-            <a href="{{route('alljobs')}}">
-                <button class="btn btn-success btn-lg" style="width:100%;">Browse all jobs</button>
-            </a>
-        </div>
-        <br><br>
-        <h1>Featured Companies</h1>
-        <div class="container">
-            <div class="row">
-               @foreach($companies as $company)
-                    <div class="col-md-3">
-                        <div class="card" style="width: 18rem;">
-                            <img  src="{{asset('uploads/logo/'.$company->logo)}}" alt=""
-                                 width="60%">
-                            <div class="card-body">
-                                <h5 class="card-title">{{$company->cname}}</h5>
-                                <p class="card-text">{{str_limit($company->description,20)}}</p>
-                                <a href="{{route('company.index',[$company->id,$company->slug])}}" class="btn btn-outline-primary">Visit Company</a>
-                            </div>
-                        </div>
-                    </div>
-                   @endforeach
-            </div>
+            {{$jobs->appends(\Illuminate\Support\Facades\Input::except('page'))->links()}}
         </div>
     </div>
 @endsection

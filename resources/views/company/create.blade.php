@@ -5,10 +5,10 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="mb-2 text-center">
-                    @if(empty(Auth::user()->profile->avatar))
+                    @if(empty(Auth::user()->company->logo))
                         <img src="{{asset('avatar/man.jpg')}}" class="rounded-circle" width="100%" alt="">
                     @else
-                        <img src="{{asset('uploads/avatar/'.Auth::user()->profile->avatar)}}" class="rounded-circle"
+                        <img src="{{asset('uploads/logo/'.Auth::user()->company->logo)}}" class="rounded-circle"
                              width="200px" height="200px" alt="">
                     @endif
                 </div>
@@ -91,7 +91,7 @@
                 <div class="card mb-2">
                     <div class="card-header">Update Cover Letter</div>
                     <div class="card-body">
-                        <form action="{{route('cover.photo')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('company.uploads')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <div class="custom-file">
@@ -120,7 +120,7 @@
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form action="{{route('avatar')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('company.uploads')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalCenterTitle">Choose Logo</h5>
@@ -134,11 +134,11 @@
                         </div>
                         <div class="form-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="avatar" id="avatar">
-                                <label class="custom-file-label" id="avatar_label" for="">Choose avatar</label>
+                                <input type="file" class="custom-file-input" name="logo" id="logo">
+                                <label class="custom-file-label" id="logo_label" for="">Choose logo</label>
                             </div>
-                            @if($errors->has('avatar'))
-                                <div class="error" style="color: red;">{{$errors->first('avatar')}}</div>
+                            @if($errors->has('logo'))
+                                <div class="error" style="color: red;">{{$errors->first('logo')}}</div>
                             @endif
                         </div>
                     </div>
@@ -158,19 +158,19 @@
             var fileName = e.target.files[0].name;
             $('#cover_photo_label').html(fileName);
         });
-        $('#avatar').change(function (e) {
+        $('#logo').change(function (e) {
             var fileName = e.target.files[0].name;
-            $('#avatar_label').html(fileName);
+            $('#logo_label').html(fileName);
         });
         $('#profile_change_btn').on('click', function () {
             $('#profileupload').modal('show');
         });
         $('.close_modal').on('click', function () {
             $('#imgPreview').hide();
-            $('#avatar_label').html('');
+            $('#logo_label').html('');
             $('#profileupload').modal('hide');
         });
-        $('#avatar').change(function () {
+        $('#logo').change(function () {
             renderPreviewImg(this);
         });
 

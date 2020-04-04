@@ -26,7 +26,7 @@ class CreateJobsTable extends Migration
             $table->string('address');
             $table->string('type');
             $table->integer('status');
-            $table->date('last_date');
+            $table->string('last_date');
             $table->timestamps();
         });
     }

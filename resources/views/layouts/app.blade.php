@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 <body>
 <div id="app">
@@ -54,7 +55,15 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Job seeker register') }}</a>
                             </li>
                         @endif
+
                     @else
+                        @if(Auth::user()->user_type == 'employer')
+                            <li>
+                                <a href="{{route('job.create')}}">
+                                    <button class="btn btn-secondary">Post a job</button>
+                                </a>
+                            </li>
+                        @endif
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -70,6 +79,14 @@
                                 @if(Auth::user()->user_type=='employer')
                                     <a class="dropdown-item" href="{{ route('company.view') }}">
                                         {{ __('Company') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('my.job') }}">
+                                        {{ __('My Jobs') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('job.applicant') }}">
+                                        {{ __('Job Applications') }}
                                     </a>
 
                                 @else

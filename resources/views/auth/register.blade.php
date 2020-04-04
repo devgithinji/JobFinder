@@ -45,7 +45,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Date of Birth') }}</label>
 
                             <div class="col-md-6">
-                                <input id="dob" type="date" class="form-control @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') }}" required autocomplete="dob">
+                                <input id="datepicker" type="text" class="form-control @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') }}" required autocomplete="dob" readonly="readonly">
 
                                 @error('dob')
                                 <span class="invalid-feedback" role="alert">
@@ -113,3 +113,9 @@
     </div>
 </div>
 @endsection
+
+<script>
+   window.onload = function () {
+       $('#datepicker').datepicker({minDate:new Date(2009,1,12), maxDate:new Date(2020,5,17)});
+   }
+</script>
