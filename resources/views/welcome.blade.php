@@ -3,6 +3,9 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-md-12 m-2">
+                <search-component></search-component>
+            </div>
             <h1>Recent Jobs</h1>
             <table class="table">
                 <thead>
@@ -40,7 +43,7 @@
                                 <a href="{{route('jobs.show',[$job->id,$job->slug])}}">
                                     <button class="btn btn-success btn-sm">Apply</button>
                                 </a>
-                            @elseguest
+                            @else
                                 @if(!$job->checkApplication())
                                     <a href="{{route('jobs.show',[$job->id,$job->slug])}}">
                                         <button class="btn btn-success btn-sm">Apply</button>

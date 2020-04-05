@@ -74,7 +74,7 @@
                                 <a href="{{route('jobs.show',[$job->id,$job->slug])}}">
                                     <button class="btn btn-success btn-sm">Apply</button>
                                 </a>
-                            @elseguest
+                            @else
                                 @if(!$job->checkApplication())
                                     <a href="{{route('jobs.show',[$job->id,$job->slug])}}">
                                         <button class="btn btn-success btn-sm">Apply</button>
