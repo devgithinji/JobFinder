@@ -6,11 +6,6 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Edit a Job</div>
-                    @if(Session::has('message'))
-                        <div class="alert alert-success">
-                            {{Session::get('message')}}
-                        </div>
-                        @endif
                     <div class="card-body">
                         <form action="{{route('job.update',[$job->id])}}" method="POST">
                             @csrf
@@ -57,6 +52,49 @@
                                     <div class="error" style="color: red;">{{$errors->first('address')}}</div>
                                 @endif
                             </div>
+
+                            <div class="form-group">
+                                <label for="number_of_vacancy">Vacancy:</label>
+                                <input type="text" name="number_of_vacancy" class="form-control @error('number_of_vacancy') is-invalid @enderror" value="{{$job->number_of_vacancy}}">
+                                @if($errors->has('number_of_vacancy'))
+                                    <div class="error" style="color: red;">
+                                        {{$errors->first('number_of_vacancy')}}
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="form-group">
+                                <label for="experience">Experience:</label>
+                                <input type="text" name="experience" class="form-control @error('experience') is-invalid @enderror" value="{{$job->experience}}">
+                                @if($errors->has('experience'))
+                                    <div class="error" style="color: red;">
+                                        {{$errors->first('experience')}}
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">Gender:</label>
+                                <select class="form-control" name="gender" id="">
+                                    <option value="any" {{$job->gender=='any'?'selected':''}}>Any</option>
+                                    <option value="male" {{$job->gender=='male'?'selected':''}}>Male</option>
+                                    <option value="female" {{$job->gender=='female'?'selected':''}}>Female</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">Salary/year:</label>
+                                <select class="form-control" name="salary" id="">
+                                    <option value="negotiable" {{$job->salary=='negotiable'?'selected':''}}>Negotiable</option>
+                                    <option value="2000-5000" {{$job->salary=='2000-5000'?'selected':''}}>2000-5000</option>
+                                    <option value="5000-10000" {{$job->salary=='5000-10000'?'selected':''}}>5000-10000</option>
+                                    <option value="10000-20000" {{$job->salary=='10000-20000'?'selected':''}} >10000-20000</option>
+                                    <option value="30000-50000" {{$job->salary=='30000-50000'?'selected':''}}>30000-50000</option>
+                                    <option value="50000-60000" {{$job->salary=='50000-60000'?'selected':''}}>50000-60000</option>
+                                    <option value="60000 plus" {{$job->salary=='60000 plus'?'selected':''}}>60000 plus</option>
+                                </select>
+                            </div>
+
                             <div class="form-group">
                                 <label for="type">Type:</label>
                                 <select name="type" class="form-control"  id="">

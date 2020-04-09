@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Category;
 use App\User;
 use App\Company;
 use App\Job;
@@ -48,6 +49,8 @@ $factory->define(Company::class, function (Faker $faker) {
 
 $factory->define(Job::class, function (Faker $faker) {
 
+    $salary = rand(10000,50000);
+
     return [
         'user_id' => User::all()->random()->id,
         'company_id' => Company::all()->random()->id,
@@ -55,11 +58,15 @@ $factory->define(Job::class, function (Faker $faker) {
         'slug' => str_slug($title),
         'description' => $faker->paragraph(rand(2,10)),
         'roles' => $faker->paragraph(rand(2,10)),
-        'category_id' => rand(1,5),
+        'category_id' => Category::all()->random()->id,
         'position' => $faker->jobTitle,
         'address' => $faker->address,
         'type' => $faker->randomElement(['full-time','part-time','freelance']),
         'status' => rand(0,1),
-        'last_date' => $faker->dateTime
+        'last_date' => $faker->dateTimeBetween('-1 week','+2 months'),
+        'number_of_vacancy' => rand(1,10),
+        'experience' => rand(1,5),
+        'gender' => $faker->randomElement(['any','male','female']),
+        'salary' => round($salary,-3),
     ];
 });

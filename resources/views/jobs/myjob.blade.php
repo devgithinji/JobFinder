@@ -6,7 +6,11 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">Dashboard</div>
-
+                    @if(Session::has('message'))
+                        <div class="alert alert-success">
+                            {{Session::get('message')}}
+                        </div>
+                    @endif
                     <div class="card-body">
                         <table class="table">
                             <thead>

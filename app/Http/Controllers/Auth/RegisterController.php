@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Company;
 use App\User;
 use App\Profile;
 use App\Http\Controllers\Controller;
@@ -50,11 +51,20 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        if ($data['user_type']== 'seeker'){
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+        }else{
+            return Validator::make($data, [
+                'cname' => ['required','string','max:255'],
+                'email' => ['required','string','email','max:255','unique:users'],
+                'password' => ['required','string','min:8','confirmed']
+            ]);
+        }
+
     }
 
     /**
@@ -65,18 +75,33 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'user_type' => $data['user_type'],
-            'password' => Hash::make($data['password']),
-        ]);
+        if ($data['user_type']== 'seeker'){
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'user_type' => $data['user_type'],
+                'password' => Hash::make($data['password']),
+            ]);
 
-        Profile::create([
-            'user_id' =>$user->id,
-            'gender' => request('gender'),
-            'dob' => request('dob')
-        ]);
+            Profile::create([
+                'user_id' =>$user->id,
+                'gender' => request('gender'),
+                'dob' => request('dob')
+            ]);
+
+        }else{
+            $user = User::create([
+                'email' => $data['email'],
+                'user_type' => $data['user_type'],
+                'password' => Hash::make($data['password']),
+            ]);
+
+            Company::create([
+                'user_id' => $user->id,
+                'cname' => $data['cname'],
+                'slug' => str_slug($data['cname'])
+            ]);
+        }
 
         return $user;
 

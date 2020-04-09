@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -69,6 +69,8 @@
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 @if(Auth::user()->user_type == 'employer' )
                                     {{Auth::user()->company->cname}}
+                                @elseif(Auth::user()->user_type == 'seeker')
+                                    {{Auth::user()->name}}
                                 @else
                                     {{Auth::user()->name}}
                                 @endif
@@ -89,7 +91,7 @@
                                         {{ __('Job Applications') }}
                                     </a>
 
-                                @else
+                                @elseif(Auth::user()->user_type=='seeker')
                                     <a class="dropdown-item" href="{{ route('profile.view') }}">
                                         {{ __('Profile') }}
                                     </a>
