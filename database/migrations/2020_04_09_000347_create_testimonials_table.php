@@ -18,7 +18,7 @@ class CreateTestimonialsTable extends Migration
             $table->text('content');
             $table->string('name');
             $table->string('profession');
-            $table->integer('video_id');
+            $table->string('video_id');
             $table->timestamps();
         });
     }
