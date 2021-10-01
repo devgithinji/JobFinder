@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
-                    <h2 class="mb-5 h3">{{$category_name}} Jobs</h2>
+                    <h2 class="mb-5 h3 mt-2">{{$category_name}} Jobs</h2>
                     <div class="rounded border jobs-wrap">
                         @foreach($jobs as $job)
                             <a href="{{route('jobs.show',[$job->id,$job->slug])}}"
