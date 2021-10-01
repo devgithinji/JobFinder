@@ -76,7 +76,7 @@ $factory->define(Job::class, function (Faker $faker) {
 
     $id = User::where('user_type', 'employer')->get()->random()->id;
 
-    dd($id);
+    dd(Company::where('user_id', $id)->first()->id);
 
     return [
         'user_id' => $id,
