@@ -1,7 +1,9 @@
 <?php
 
 use App\Category;
+use App\Post;
 use App\Profile;
+use App\Testimonial;
 use App\User;
 use App\Role;
 use Illuminate\Database\Seeder;
@@ -18,8 +20,8 @@ class DatabaseSeeder extends Seeder
         Category::truncate();
         factory('App\User', 20)->create();
         factory('App\Company', 30)->create();
-        factory(\App\Post::class, 20)->create();
-        factory(\App\Testimonial::class, 10)->create();
+        factory(Post::class, 20)->create();
+        factory(Testimonial::class, 10)->create();
 
         $users = User::all();
 
@@ -50,6 +52,7 @@ class DatabaseSeeder extends Seeder
         factory('App\Job', 50)->create();
 
         $adminRole = Role::create(['name' => 'admin']);
+
         $admin = User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',

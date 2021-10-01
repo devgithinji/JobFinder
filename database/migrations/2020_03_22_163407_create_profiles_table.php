@@ -20,7 +20,7 @@ class CreateProfilesTable extends Migration
             $table->string('gender')->nullable();
             $table->string('dob')->nullable();
             $table->string('experience')->nullable();
-            $table->string('bio')->nullable();
+            $table->text('bio')->nullable();
             $table->string('cover_letter')->nullable();
             $table->string('resume')->nullable();
             $table->string('avatar')->nullable();
