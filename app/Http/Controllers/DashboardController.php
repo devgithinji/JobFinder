@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Contact;
 use App\Job;
 use App\Post;
 use Illuminate\Http\Request;
@@ -12,28 +13,45 @@ class DashboardController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','admin']);
+        $this->middleware(['auth', 'admin']);
     }
 
-    public function index(){
+
+    public function index()
+    {
+        return view('admin.index');
+    }
+
+
+    public function posts()
+    {
         $posts = Post::latest()->paginate(20);
-        return view('admin.index',compact('posts'));
+        return view('admin.posts', compact('posts'));
     }
 
-    public function create(){
+    public function contacts()
+    {
+        $messages = Contact::latest()->paginate(5);
+
+        return view('admin.contacts', compact('messages'));
+    }
+
+    public function create()
+    {
         return view('admin.create');
     }
 
-    public function store(Request $request){
-        $this->validate($request,[
+    public function store(Request $request)
+    {
+        $this->validate($request, [
             'title' => 'required|min:3',
             'content' => 'required|min:200',
-            'image' =>'required|mimes:jpeg,jpg,png'
+            'image' => 'required|mimes:jpeg,jpg,png'
         ]);
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $path = $file->store('uploads','public');
+            $path = $file->store('uploads', 'public');
             Post::create([
                 'title' => $request['title'],
                 'slug' => str_slug($request['title']),
@@ -43,25 +61,27 @@ class DashboardController extends Controller
             ]);
         }
 
-        return redirect('/dashboard')->with('message','Post created successfully');
+        return redirect('/dashboard')->with('message', 'Post created successfully');
     }
 
-    public function editPost($id){
-    $post = Post::findOrFail($id);
-    return view('admin.edit',compact('post'));
+    public function editPost($id)
+    {
+        $post = Post::findOrFail($id);
+        return view('admin.edit', compact('post'));
     }
 
-    public function update(Request $request,$id){
-       $this->validate($request,[
-           'title' => 'required',
-           'content' => 'required',
-           'image' => 'mimes:jpeg,jpg,png'
-       ]);
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'mimes:jpeg,jpg,png'
+        ]);
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $path = $file->store('uploads','public');
-            Post::where('id',$id)->update([
+            $path = $file->store('uploads', 'public');
+            Post::where('id', $id)->update([
                 'title' => $request['title'],
                 'content' => $request['content'],
                 'image' => $path,
@@ -69,69 +89,78 @@ class DashboardController extends Controller
             ]);
         }
 
-        $this->updateAllExceptImage($request,$id);
+        $this->updateAllExceptImage($request, $id);
 
-        return redirect()->back()->with('message','Post updated successfully');
+        return redirect()->back()->with('message', 'Post updated successfully');
     }
 
-    public function updateAllExceptImage(Request $request,$id){
+    public function updateAllExceptImage(Request $request, $id)
+    {
 
-      return  Post::where('id',$id)->update([
+        return Post::where('id', $id)->update([
             'title' => $request['title'],
             'content' => $request['content'],
             'status' => $request['status']
         ]);
     }
 
-    public function deletePost($id){
+    public function deletePost($id)
+    {
 
         $post = Post::findOrFail($id)->first();
         $post->delete();
 
-        return redirect('/dashboard')->with('message','Post deleted successfully');
+        return redirect('/dashboard')->with('message', 'Post deleted successfully');
     }
 
-    public function trash(){
+    public function trash()
+    {
         $posts = Post::onlyTrashed()->paginate(20);
-        return view('admin.trash',compact('posts'));
+        return view('admin.trash', compact('posts'));
     }
 
-    public function restore($id){
-        Post::onlyTrashed()->where('id',$id)->restore();
-        return redirect()->back()->with('message','Post restored successfully');
+    public function restore($id)
+    {
+        Post::onlyTrashed()->where('id', $id)->restore();
+        return redirect()->back()->with('message', 'Post restored successfully');
     }
 
-    public function toggle($id){
+    public function toggle($id)
+    {
         $post = Post::find($id);
         $post->status = !$post->status;
         $post->save();
 
-        return redirect()->back()->with('message','Status updated successfully');
+        return redirect()->back()->with('message', 'Status updated successfully');
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $post = Post::find($id);
-        return view('admin.read',compact('post'));
+        return view('admin.read', compact('post'));
     }
 
-    public function jobsShow(){
+    public function jobsShow()
+    {
         $jobs = Job::latest()->paginate(15);
 
-        return view('admin.jobs_show',compact('jobs'));
+        return view('admin.jobs_show', compact('jobs'));
     }
 
-    public function CompaniesShow(){
+    public function CompaniesShow()
+    {
         $companies = Company::latest()->paginate(15);
 
-        return view('admin.companies_show',compact('companies'));
+        return view('admin.companies_show', compact('companies'));
     }
 
-    public function Jobtoggle($id){
+    public function Jobtoggle($id)
+    {
         $job = Job::find($id);
         $job->status = !$job->status;
         $job->save();
 
-        return redirect()->back()->with('message','Job status updated successfully');
+        return redirect()->back()->with('message', 'Job status updated successfully');
     }
 
 }

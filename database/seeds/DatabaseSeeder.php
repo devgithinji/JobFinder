@@ -16,14 +16,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Category::truncate();
-        factory('App\User',20)->create();
-        factory('App\Company',30)->create();
+        factory('App\User', 20)->create();
+        factory('App\Company', 30)->create();
+        factory(\App\Post::class, 20)->create();
+        factory(\App\Testimonial::class, 10)->create();
 
         $users = User::all();
 
-        foreach ($users as $user){
+        foreach ($users as $user) {
             Profile::create([
-                'user_id' =>$user->id
+                'user_id' => $user->id
             ]);
         }
 
@@ -39,15 +41,15 @@ class DatabaseSeeder extends Seeder
         ];
 
         Role::truncate();
-        foreach ($categories as $category){
+        foreach ($categories as $category) {
             Category::create([
-                'name'=> $category
+                'name' => $category
             ]);
         }
 
-        factory('App\Job',50)->create();
+        factory('App\Job', 50)->create();
 
-        $adminRole = Role::create(['name'=>'admin']);
+        $adminRole = Role::create(['name' => 'admin']);
         $admin = User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
@@ -56,5 +58,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $admin->roles()->attach($adminRole);
+
+
     }
 }

@@ -2,11 +2,6 @@
 
 @section('content')
     <div class="container">
-        @if(Session::has('message'))
-            <div class="alert alert-success">
-                {{Session::get('message')}}
-            </div>
-        @endif
         <div class="row">
             <div class="col-md-3">
                 @include('admin.left-menu')
@@ -14,53 +9,21 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-                        Menu
+                        <h4> Hi {{\Illuminate\Support\Facades\Auth::user()->name}}</h4>
                     </div>
                     <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col">Image</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Content</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($posts as $post)
-                                <tr>
-                                    <td><img src="{{asset('storage/'.$post->image)}}" alt="" width="80"></td>
-                                    <td>{{$post->title}}</td>
-                                    <td>{{str_limit($post->content,20)}}</td>
-                                    <td>
-                                        @if($post->status == 1)
-                                            <a href="{{route('post.toggle',[$post->id])}}" class="badge badge-success"> Live</a>
-                                        @else
-                                            <a href="{{route('post.toggle',[$post->id])}}" class="badge badge-primary">Draft</a>
-                                        @endif
-                                    </td>
-                                    <td>{{$post->created_at->diffForHumans()}}</td>
-                                    <td>
-                                        <div class="text-center">
-                                            <a href="{{route('post.edit',[$post->id])}}">
-                                                <button class="btn-sm btn-success mb-1">Edit</button>
-                                            </a>
-                                            <button id="deleteBtn"
-                                                    class="btn-sm btn-danger">Delete
-                                            </button>
-                                            <form id="postDestroy" action="{{route('post.delete',[$post->id])}}"
-                                                  method="POST">
-                                                @csrf
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                        {{$posts->links()}}
+                        <div>
+                            <h4>Jobs Count: {{count(\App\Job::all())}}</h4>
+                        </div>
+                        <div>
+                            <h4>Companies Count: {{count(\App\Company::all())}}</h4>
+                        </div>
+                        <div>
+                            <h4>Posts Count: {{count(\App\Post::all())}}</h4>
+                        </div>
+                        <div>
+                            <h4>Testimonials Count: {{count(\App\Testimonial::all())}}</h4>
+                        </div>
                     </div>
                 </div>
             </div>

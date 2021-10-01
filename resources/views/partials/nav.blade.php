@@ -29,7 +29,7 @@
                                         </li>
                                     @endif
                                     <li><a href="{{route('company')}}">Companies List</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="{{route('contact')}}">Contact</a></li>
                                     <li>
                                         @if(!Auth::check())
                                             <a href="{{route('login')}}">

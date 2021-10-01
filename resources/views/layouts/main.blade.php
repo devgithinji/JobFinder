@@ -13,8 +13,7 @@
 <div class="site-wrap" >
     @include('partials.mobile_site_menu')
     @include('partials.nav')
-    <br><br><br>
-    <br><br>
+    <br>
     @yield('content')
     @include('partials.footer')
 </div>

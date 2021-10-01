@@ -44,6 +44,5 @@
     }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRLXGKKp60pbmDa4tIAHvW0wKiCkOt844&libraries=places&callback=initAutocomplete"
-        async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRkQR0zEJYo-Moz-qwTUwXYYSw4WpdAX0&libraries=places&callback=initAutocomplete" async defer></script>
 
